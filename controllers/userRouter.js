@@ -15,7 +15,7 @@ UserRouter.route('/')
 			return res.status(400).json({error: "Username already taken"})
 		}
 
-		if (password.length < 3) {
+		if (!password || password.length < 3) {
 			return res.status(400).json({error: "Invalid password"})
 		}
 

@@ -7,6 +7,7 @@ const BlogRouter = require('./controllers/blogRouter');
 const UserRouter = require('./controllers/userRouter');
 const LoginRouter = require('./controllers/loginRouter');
 
+
 mongoose.set('strictQuery', true);
 mongoose.connect(MONGODB_URI, {dbName: DB_NAME});
 
@@ -16,6 +17,11 @@ app.use(express.json());
 app.use('/api/blogs', BlogRouter);
 app.use('/api/users', UserRouter);
 app.use('/api/login', LoginRouter);
+
+if (process.env.NODE_ENV === 'test') {
+	const testingRouter = require('./tests/testRouter');
+	app.use('/api/testing', testingRouter);
+}
 
 
 module.exports = app;

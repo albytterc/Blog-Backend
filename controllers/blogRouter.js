@@ -58,6 +58,9 @@ BlogRouter.route('/:id')
 		}
 	})
 	.put(async (req, res) => {
+		if (!req.user) {
+			return res.status(401).json({error: "User not authorized to update blog post"})
+		}
 		const result = await Blog.findByIdAndUpdate(req.params.id, req.body, {new: true}).exec();
 		if (result) {
 			res.json(result);
